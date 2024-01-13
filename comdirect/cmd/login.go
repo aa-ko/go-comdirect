@@ -3,14 +3,13 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"log"
+	"os"
+	"time"
+
 	"github.com/jsattler/go-comdirect/comdirect/keychain"
 	"github.com/jsattler/go-comdirect/pkg/comdirect"
 	"github.com/spf13/cobra"
-	"golang.org/x/term"
-	"log"
-	"os"
-	"syscall"
-	"time"
 )
 
 var (
@@ -32,7 +31,7 @@ func login(cmd *cobra.Command, args []string) {
 
 	if passwordFlag == "" {
 		fmt.Print("Password: ")
-		bytePassword, _ := term.ReadPassword(syscall.Stdin)
+		bytePassword, _ := readPasswordWrapper()
 		passwordFlag = string(bytePassword)
 		fmt.Println()
 	}
@@ -45,7 +44,7 @@ func login(cmd *cobra.Command, args []string) {
 
 	if clientSecretFlag == "" {
 		fmt.Print("Client Secret: ")
-		byteClientSecret, _ := term.ReadPassword(syscall.Stdin)
+		byteClientSecret, _ := readPasswordWrapper()
 		clientSecretFlag = string(byteClientSecret)
 		fmt.Println()
 	}
